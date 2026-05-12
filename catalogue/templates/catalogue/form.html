@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulaire tâche</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #083a4f;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(165, 141, 102, 0.25);
+        border-radius: 20px;
+        padding: 52px 48px;
+        width: 100%;
+        max-width: 500px;
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(165, 141, 102, 0.6);
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 36px;
+        transition: color 0.2s;
+      }
+      .back:hover {
+        color: #a58d66;
+      }
+      .tag {
+        display: inline-block;
+        background: rgba(165, 141, 102, 0.12);
+        color: #a58d66;
+        border: 1px solid rgba(165, 141, 102, 0.3);
+        border-radius: 5px;
+        padding: 4px 12px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+        font-weight: 700;
+        color: #e5e1dd;
+        letter-spacing: -0.01em;
+        margin-bottom: 36px;
+        line-height: 1.2;
+      }
+      h1 em {
+        font-style: italic;
+        color: #a58d66;
+      }
+      label {
+        display: block;
+        font-size: 10px;
+        font-weight: 600;
+        color: #a58d66;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: 10px;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        background: rgba(8, 58, 79, 0.6);
+        border: 1px solid rgba(165, 141, 102, 0.2);
+        border-radius: 10px;
+        padding: 14px 18px;
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        color: #e5e1dd;
+        outline: none;
+        transition: border-color 0.2s;
+        resize: vertical;
+      }
+      input[type="text"]::placeholder,
+      textarea::placeholder {
+        color: rgba(192, 213, 214, 0.25);
+      }
+      input[type="text"]:focus,
+      textarea:focus {
+        border-color: #a58d66;
+      }
+      textarea {
+        min-height: 110px;
+      }
+      .field {
+        margin-bottom: 24px;
+      }
+      .checkbox-field {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: rgba(8, 58, 79, 0.6);
+        border: 1px solid rgba(165, 141, 102, 0.2);
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin-bottom: 36px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .checkbox-field:hover {
+        border-color: rgba(165, 141, 102, 0.4);
+      }
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #a58d66;
+        cursor: pointer;
+      }
+      .checkbox-text {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(192, 213, 214, 0.6);
+        letter-spacing: 0.02em;
+      }
+      .divider {
+        height: 1px;
+        background: rgba(165, 141, 102, 0.15);
+        margin-bottom: 32px;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+      }
+      .btn-save {
+        flex: 1;
+        background: #a58d66;
+        color: #083a4f;
+        border: none;
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: "Inter", sans-serif;
+        cursor: pointer;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn-save:hover {
+        background: #c0a57a;
+        transform: translateY(-1px);
+      }
+      .btn-cancel {
+        background: transparent;
+        color: rgba(192, 213, 214, 0.4);
+        border: 1px solid rgba(192, 213, 214, 0.15);
+        border-radius: 10px;
+        padding: 15px 22px;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: "Inter", sans-serif;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .btn-cancel:hover {
+        border-color: rgba(192, 213, 214, 0.35);
+        color: #c0d5d6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <a href="{% url 'liste' %}" class="back">← Retour</a>
+      <div class="tag">{% if object %}Édition{% else %}Nouveau{% endif %}</div>
+      <h1>
+        {% if object %}Modifier la <em>tâche</em>{% else %}Nouvelle
+        <em>tâche</em>{% endif %}
+      </h1>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="field">
+          <label>Titre</label>
+          {{ form.titre }}
+        </div>
+        <div class="field">
+          <label>Description</label>
+          {{ form.description }}
+        </div>
+        <label class="checkbox-field">
+          {{ form.terminee }}
+          <span class="checkbox-text">Marquer comme terminée</span>
+        </label>
+        <div class="divider"></div>
+        <div class="actions">
+          <button type="submit" class="btn-save">Enregistrer</button>
+          <a href="{% url 'liste' %}" class="btn-cancel">Annuler</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

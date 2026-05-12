@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mes Tâches</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #083a4f;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+        padding: 48px 24px;
+      }
+      .container {
+        max-width: 1100px;
+        margin: auto;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 48px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid rgba(165, 141, 102, 0.25);
+      }
+      .header-left .label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #a58d66;
+        margin-bottom: 10px;
+      }
+      .header-left h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 42px;
+        font-weight: 700;
+        color: #e5e1dd;
+        letter-spacing: -0.01em;
+        line-height: 1;
+      }
+      .header-left h1 em {
+        font-style: italic;
+        color: #a58d66;
+      }
+      .btn-add {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #a58d66;
+        color: #083a4f;
+        border-radius: 8px;
+        padding: 13px 26px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: "Inter", sans-serif;
+        text-decoration: none;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        white-space: nowrap;
+      }
+      .btn-add:hover {
+        background: #c0a57a;
+        transform: translateY(-1px);
+        color: #083a4f;
+      }
+      .stats {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+      .stat {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(165, 141, 102, 0.2);
+        border-radius: 12px;
+        padding: 20px 28px;
+        flex: 1;
+      }
+      .stat-value {
+        font-family: "Playfair Display", serif;
+        font-size: 32px;
+        font-weight: 700;
+        color: #e5e1dd;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: #a58d66;
+        margin-top: 4px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th {
+        padding: 14px 20px;
+        text-align: left;
+        font-size: 10px;
+        font-weight: 600;
+        color: #a58d66;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        border-bottom: 1px solid rgba(165, 141, 102, 0.2);
+      }
+      tbody tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background 0.15s;
+      }
+      tbody tr:hover {
+        background: rgba(165, 141, 102, 0.05);
+      }
+      tbody td {
+        padding: 22px 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        color: #c0d5d6;
+      }
+      .td-titre {
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #e5e1dd;
+        letter-spacing: 0.01em;
+      }
+      .td-desc {
+        color: rgba(192, 213, 214, 0.55);
+        font-size: 13px;
+        max-width: 280px;
+      }
+      .td-date {
+        color: rgba(165, 141, 102, 0.7);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .badge-terminee {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(64, 126, 140, 0.2);
+        color: #407e8c;
+        border: 1px solid rgba(64, 126, 140, 0.35);
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .badge-encours {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(165, 141, 102, 0.12);
+        color: #a58d66;
+        border: 1px solid rgba(165, 141, 102, 0.3);
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .dot-teal {
+        background: #407e8c;
+      }
+      .dot-gold {
+        background: #a58d66;
+      }
+      .td-actions {
+        white-space: nowrap;
+      }
+      .btn-modifier {
+        display: inline-block;
+        background: transparent;
+        color: #a58d66;
+        border: 1px solid rgba(165, 141, 102, 0.3);
+        border-radius: 6px;
+        padding: 7px 18px;
+        font-size: 12px;
+        font-weight: 500;
+        text-decoration: none;
+        margin-right: 8px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .btn-modifier:hover {
+        border-color: #a58d66;
+        background: rgba(165, 141, 102, 0.1);
+        color: #a58d66;
+      }
+      .btn-supprimer {
+        display: inline-block;
+        background: transparent;
+        color: rgba(192, 213, 214, 0.4);
+        border: 1px solid rgba(192, 213, 214, 0.15);
+        border-radius: 6px;
+        padding: 7px 18px;
+        font-size: 12px;
+        font-weight: 500;
+        text-decoration: none;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .btn-supprimer:hover {
+        border-color: rgba(192, 213, 214, 0.4);
+        color: #c0d5d6;
+      }
+      .empty-msg {
+        text-align: center;
+        color: rgba(165, 141, 102, 0.3);
+        padding: 60px;
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-left">
+          <div class="label">Task Manager</div>
+          <h1>Mes <em>Tâches</em></h1>
+        </div>
+        <a href="{% url 'ajouter' %}" class="btn-add">＋ Nouvelle tâche</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">{{ taches|length }}</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" style="color: #407e8c">
+            {% with terminées=0 %}{{ taches|length }}{% endwith %}
+          </div>
+          <div class="stat-label">Terminées</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" style="color: #a58d66">—</div>
+          <div class="stat-label">En cours</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Date création</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tache in taches %}
+          <tr>
+            <td class="td-titre">{{ tache.titre }}</td>
+            <td class="td-desc">{{ tache.description }}</td>
+            <td>
+              {% if tache.terminee %}
+              <span class="badge-terminee"
+                ><span class="dot dot-teal"></span>Terminée</span
+              >
+              {% else %}
+              <span class="badge-encours"
+                ><span class="dot dot-gold"></span>En cours</span
+              >
+              {% endif %}
+            </td>
+            <td class="td-date">
+              {{ tache.date_creation|date:"d/m/Y · H:i" }}
+            </td>
+            <td class="td-actions">
+              <a href="{% url 'modifier' tache.pk %}" class="btn-modifier"
+                >Modifier</a
+              >
+              <a href="{% url 'supprimer' tache.pk %}" class="btn-supprimer"
+                >Supprimer</a
+              >
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="empty-msg">Aucune tâche pour l'instant.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
